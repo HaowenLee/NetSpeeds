@@ -21,7 +21,12 @@ object NetworkUtil {
     fun getNetSpeed(): String {
         val nowTotalRxBytes = totalRxBytes
         val nowTimeStamp = System.currentTimeMillis()
-        val speed = (nowTotalRxBytes - lastTotalRxBytes) * 1000 / (nowTimeStamp - lastTimeStamp)//毫秒转换
+        val dlTime = nowTimeStamp - lastTimeStamp
+        val speed = if (dlTime <= 0) {
+            0
+        } else {
+            (nowTotalRxBytes - lastTotalRxBytes) * 1000 / dlTime//毫秒转换
+        }
 
         lastTimeStamp = nowTimeStamp
         lastTotalRxBytes = nowTotalRxBytes
