@@ -74,7 +74,12 @@ class CustomViewManager private constructor(private val mContext: Context) {
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
         // 期望的位图格式。默认为不透明。参考android.graphics.PixelFormat。
         parmas.format = PixelFormat.RGBA_8888
-        mWindowManager.addView(ankoView, parmas)
+
+        try {
+            mWindowManager.addView(ankoView, parmas)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         addHideView()
 
@@ -119,7 +124,12 @@ class CustomViewManager private constructor(private val mContext: Context) {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
         // 期望的位图格式。默认为不透明。参考android.graphics.PixelFormat。
         hideParams.format = PixelFormat.RGBA_8888
-        mWindowManager.addView(hideView, hideParams)
+
+        try {
+            mWindowManager.addView(hideView, hideParams)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initListener() {
