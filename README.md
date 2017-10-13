@@ -4,4 +4,4 @@
 
 ### 应用截图
 
-![image](image/screenshot.png)
+<img src="https://raw.githubusercontent.com/HaowenLee/NetSpeeds/master/image/screenshot.png" style="zoom:40%"/>
