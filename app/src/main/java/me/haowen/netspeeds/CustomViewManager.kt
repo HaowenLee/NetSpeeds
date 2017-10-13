@@ -1,10 +1,12 @@
 package me.haowen.netspeeds
 
+import BarUtil
 import NetworkUtil
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PixelFormat
+import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
 import io.reactivex.Flowable
@@ -23,16 +25,22 @@ class CustomViewManager private constructor(private val mContext: Context) {
 
     private val hideView: View
 
+    /** 状态栏高度 */
+    private val barHeight by lazy { BarUtil.getStatusBarHeight(mContext) }
+
+    /** 文字大小 */
+    private val mTextSize by lazy { barHeight / 9f * 5f }
+
     init {
         ankoView = initView()
         hideView = View(mContext)
     }
 
     private fun initView(): TextView = TextView(mContext).apply {
-        textSize = 14f
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize)
         textColor = Color.WHITE
 //        setBackgroundResource(R.drawable.floatview_background)
-        text = "0kb/s"
+        text = "0kB"
         gravity = Gravity.CENTER
         layoutParams = ViewGroup.LayoutParams(100, 100)
     }
@@ -50,7 +58,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
         val screenY by Preference(PreKey.SCREEN_Y, 0)
 
         parmas.width = 200
-        parmas.height = 68
+        parmas.height = barHeight
         //窗口图案放置位置
         parmas.gravity = Gravity.TOP or Gravity.LEFT
         // 如果忽略gravity属性，那么它表示窗口的绝对X位置。
