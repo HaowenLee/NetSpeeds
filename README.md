@@ -4,4 +4,4 @@
 
 ### 应用截图
 
-![image](image/screenshot.jpg)
+![image](image/screenshot.png)
