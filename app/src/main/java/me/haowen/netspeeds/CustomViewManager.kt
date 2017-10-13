@@ -47,6 +47,22 @@ class CustomViewManager private constructor(private val mContext: Context) {
 
     private val parmas = WindowManager.LayoutParams()
 
+    fun setEnableTouch(enable: Boolean, update: Boolean = true) {
+        if (enable) {
+            parmas.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+        } else {
+            parmas.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        }
+        if (update) {
+            mWindowManager.updateViewLayout(ankoView, parmas)
+        }
+    }
+
     /**
      * @param
      * @description 在手机屏幕上显示自定义的FloatView
@@ -56,6 +72,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
     fun showFloatViewOnWindow() {
         val screenX by Preference(PreKey.SCREEN_X, 0)
         val screenY by Preference(PreKey.SCREEN_Y, 0)
+        val isTouchable by Preference(PreKey.IS_TOUCHABLE, true)
 
         parmas.width = 200
         parmas.height = barHeight
@@ -70,8 +87,9 @@ class CustomViewManager private constructor(private val mContext: Context) {
         parmas.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
         //FLAG_NOT_FOCUSABLE让window不能获得焦点，这样用户快就不能向该window发送按键事件及按钮事件
         //FLAG_NOT_TOUCH_MODAL即使在该window在可获得焦点情况下，仍然把该window之外的任何event发送到该window之后的其他window.
-        parmas.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+
+        setEnableTouch(isTouchable, false)
+
         // 期望的位图格式。默认为不透明。参考android.graphics.PixelFormat。
         parmas.format = PixelFormat.RGBA_8888
 

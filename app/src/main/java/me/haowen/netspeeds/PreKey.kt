@@ -12,4 +12,6 @@ object PreKey {
     const val SCREEN_Y = "SCREEN_Y"
 
     const val IS_FIXED = "IS_FIXED"
+
+    const val IS_TOUCHABLE = "IS_TOUCHABLE"
 }

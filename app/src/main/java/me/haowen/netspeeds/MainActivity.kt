@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private var screenX by Preference(PreKey.SCREEN_X, 0)
     private var screenY by Preference(PreKey.SCREEN_Y, 0)
     private var isFixed by Preference(PreKey.IS_FIXED, false)
+    private var isTouchable by Preference(PreKey.IS_TOUCHABLE, true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,24 @@ class MainActivity : AppCompatActivity() {
                         "固定"
                     } else {
                         "不固定"
+                    }
+                }
+            }
+
+            checkBox {
+                isChecked = isTouchable
+                text = if (isChecked) {
+                    "可触摸"
+                } else {
+                    "不可触摸"
+                }
+                onCheckedChange { _, isChecked ->
+                    isTouchable = isChecked
+                    CustomViewManager.getInstance(this@MainActivity)?.setEnableTouch(isChecked)
+                    text = if (isChecked) {
+                        "可触摸"
+                    } else {
+                        "不可触摸"
                     }
                 }
             }
