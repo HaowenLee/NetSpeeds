@@ -2,7 +2,9 @@ import android.net.TrafficStats
 import me.haowen.netspeeds.App
 import me.haowen.netspeeds.MemoryConstants
 
-
+/**
+ * 网速获取工具类
+ */
 object NetworkUtil {
 
     private var lastTotalRxBytes: Long = 0

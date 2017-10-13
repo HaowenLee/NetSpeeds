@@ -8,8 +8,8 @@ import com.facebook.stetho.Stetho
 
 /**
  * author: yyhy
- * date: 2017/10/10 17:44
- * desc:
+ * date  : 2017/10/10 17:44
+ * desc  : App
  */
 class App : Application() {
 

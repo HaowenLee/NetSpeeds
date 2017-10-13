@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class Preference<T>(val name: String?, val default: T) : ReadWriteProperty<Any?, T> {
+class Preference<T>(private val name: String?, private val default: T) : ReadWriteProperty<Any?, T> {
 
     private val sharePre: SharedPreferences = App.context!!.getSharedPreferences("config",
             Context.MODE_PRIVATE)

@@ -2,8 +2,8 @@ package me.haowen.netspeeds
 
 /**
  * author: yyhy
- * date: 2017/10/12 16:52
- * desc:
+ * date  : 2017/10/12 16:52
+ * desc  : SharePreference相关KEY值常量
  */
 object PreKey {
 

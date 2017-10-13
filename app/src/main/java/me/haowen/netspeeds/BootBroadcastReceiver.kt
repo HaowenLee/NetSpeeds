@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-
+/**
+ * 开机自启动广播
+ */
 class BootBroadcastReceiver : BroadcastReceiver() {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")

@@ -6,8 +6,8 @@ import android.os.IBinder
 
 /**
  * author: yyhy
- * date: 2017/10/11 17:01
- * desc:
+ * date  : 2017/10/11 17:01
+ * desc  : 显示悬浮网速
  */
 class FloatService : Service() {
 

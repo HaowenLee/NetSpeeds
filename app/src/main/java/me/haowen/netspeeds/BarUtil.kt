@@ -1,5 +1,8 @@
 import android.content.Context
 
+/**
+ * 状态栏相关工具类
+ */
 object BarUtil {
 
     /**
