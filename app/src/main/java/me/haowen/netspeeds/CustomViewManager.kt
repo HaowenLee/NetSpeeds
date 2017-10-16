@@ -63,6 +63,8 @@ class CustomViewManager private constructor(private val mContext: Context) {
         }
     }
 
+    var isVisiable = true
+
     /**
      * @param
      * @description 在手机屏幕上显示自定义的FloatView
@@ -103,7 +105,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
 
         initListener()
 
-        Flowable.interval(0, 3, TimeUnit.SECONDS)
+        Flowable.interval(0, 1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
