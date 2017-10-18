@@ -3,7 +3,7 @@ package me.haowen.netspeeds.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import me.haowen.netspeeds.global.CustomViewManager
+import me.haowen.netspeeds.widget.CustomViewManager
 
 /**
  * author: yyhy

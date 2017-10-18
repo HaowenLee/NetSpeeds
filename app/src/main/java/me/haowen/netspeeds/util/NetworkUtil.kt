@@ -1,6 +1,6 @@
 import android.net.TrafficStats
 import me.haowen.netspeeds.global.App
-import me.haowen.netspeeds.global.MemoryConstants
+import me.haowen.netspeeds.util.MemoryConstants
 
 /**
  * 网速获取工具类

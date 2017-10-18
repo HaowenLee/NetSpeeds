@@ -1,4 +1,4 @@
-package me.haowen.netspeeds.global
+package me.haowen.netspeeds.util
 
 /**
  * 存储相关的常量
