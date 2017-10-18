@@ -1,19 +1,25 @@
 package me.haowen.netspeeds.activity
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
-import me.haowen.netspeeds.widget.CustomViewManager
 import me.haowen.netspeeds.global.PreKey
 import me.haowen.netspeeds.service.FloatService
 import me.haowen.netspeeds.util.Preference
+import me.haowen.netspeeds.widget.CustomViewManager
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.button
 import org.jetbrains.anko.checkBox
 import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.verticalLayout
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -77,13 +83,57 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            button("通知监听权限"){
+            button("通知监听权限") {
                 onClick {
                     startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
                 }
             }
         }
+        if (commonROMPermissionCheck(this)) {
+            startService(Intent(this, FloatService::class.java))
+        } else {
+            if (isM()) requestAlertWindowPermission()
+        }
+    }
 
-        startService(Intent(this, FloatService::class.java))
+    companion object {
+        private val REQUEST_CODE = 1
+    }
+
+    /** 判断权限 */
+    private fun commonROMPermissionCheck(context: Context): Boolean {
+        var result = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                val clazz = Settings::class.java
+                val canDrawOverlays = clazz.getDeclaredMethod("canDrawOverlays", Context::class.java)
+                result = canDrawOverlays.invoke(null, context) == true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
+        return result
+    }
+
+    /** SDK版本是否是6.0 */
+    private fun isM() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+    /** 申请权限 */
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun requestAlertWindowPermission() {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+        intent.data = Uri.parse("package:" + packageName)
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            if (Settings.canDrawOverlays(this)) {
+                startService(Intent(this, FloatService::class.java))
+            }
+        }
     }
 }
