@@ -1,4 +1,4 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.util.extension
 
 import android.util.Log
 

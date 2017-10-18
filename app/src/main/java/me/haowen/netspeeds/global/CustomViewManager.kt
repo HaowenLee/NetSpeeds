@@ -1,4 +1,4 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.global
 
 import BarUtil
 import NetworkUtil
@@ -12,6 +12,7 @@ import android.widget.TextView
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import me.haowen.netspeeds.util.Preference
 import org.jetbrains.anko.textColor
 import java.util.concurrent.TimeUnit
 

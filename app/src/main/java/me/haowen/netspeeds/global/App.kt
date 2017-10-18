@@ -1,4 +1,4 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.global
 
 import android.annotation.SuppressLint
 import android.app.Application

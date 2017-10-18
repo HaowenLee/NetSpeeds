@@ -1,7 +1,8 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import me.haowen.netspeeds.global.App
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 

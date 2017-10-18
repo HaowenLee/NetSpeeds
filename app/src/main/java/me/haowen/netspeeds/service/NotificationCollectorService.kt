@@ -1,7 +1,9 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.service
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import me.haowen.netspeeds.global.App
+import me.haowen.netspeeds.global.CustomViewManager
 
 /**
  * 通知的监听

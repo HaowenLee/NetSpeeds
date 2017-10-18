@@ -1,9 +1,13 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.activity
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import me.haowen.netspeeds.global.CustomViewManager
+import me.haowen.netspeeds.global.PreKey
+import me.haowen.netspeeds.service.FloatService
+import me.haowen.netspeeds.util.Preference
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.button
 import org.jetbrains.anko.checkBox

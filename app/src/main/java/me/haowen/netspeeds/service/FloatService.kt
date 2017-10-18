@@ -1,8 +1,9 @@
-package me.haowen.netspeeds
+package me.haowen.netspeeds.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import me.haowen.netspeeds.global.CustomViewManager
 
 /**
  * author: yyhy
