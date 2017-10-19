@@ -8,4 +8,4 @@
 
 ### 应用截图
 
-<img src="https://raw.githubusercontent.com/HaowenLee/NetSpeeds/master/image/screenshot.png" style="zoom:40%"/>
+![image](https://raw.githubusercontent.com/HaowenLee/NetSpeeds/master/image/screenshot.png){:height="50%" width="50%"}
