@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
             button("通知监听权限") {
                 onClick {
-                    startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                    startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
                 }
             }
         }
