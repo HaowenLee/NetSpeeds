@@ -41,7 +41,6 @@ class CustomViewManager private constructor(private val mContext: Context) {
     private fun initView(): TextView = TextView(mContext).apply {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize)
         textColor = Color.WHITE
-//        setBackgroundResource(R.drawable.floatview_background)
         text = "0kB"
         gravity = Gravity.CENTER
         layoutParams = ViewGroup.LayoutParams(100, 100)
@@ -65,7 +64,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
         }
     }
 
-    var isVisiable = true
+    var isVisible = true
 
     /**
      * @param
@@ -116,21 +115,23 @@ class CustomViewManager private constructor(private val mContext: Context) {
                     // TODO 横全屏到竖屏的时候获取不准确
                     hideView.getLocationOnScreen(top)
 
-                    if (top[1] == 0) {
+                    if (!isVisible) {
                         ankoView.visibility = View.GONE
                     } else {
-                        ankoView.visibility = View.VISIBLE
-                        ankoView.text = (NetworkUtil.getNetSpeed())
+                        if (top[1] == 0) {
+                            ankoView.visibility = View.GONE
+                        } else {
+                            ankoView.visibility = View.VISIBLE
+                            ankoView.text = (NetworkUtil.getNetSpeed())
+                        }
                     }
-                }, { e ->
-                    e.printStackTrace()
-                })
+                }, { e -> e.printStackTrace() })
     }
 
     private fun addHideView() {
         val hideParams = WindowManager.LayoutParams()
-        hideParams.width = 100
-        hideParams.height = 100
+        hideParams.width = 0
+        hideParams.height = 0
         //窗口图案放置位置
         hideParams.gravity = Gravity.TOP or Gravity.LEFT
         // 如果忽略gravity属性，那么它表示窗口的绝对X位置。
