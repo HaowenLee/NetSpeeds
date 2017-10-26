@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity() {
                     //                    backgroundResource = R.drawable.shape_setting_item_single_left
 
                     imageView {
-                        imageResource = R.mipmap.ic_launcher
+                        imageResource = R.drawable.ic_save
                         scaleType = ImageView.ScaleType.CENTER_CROP
-                    }.lparams(58, 58) {
+                    }.lparams(90, 90) {
                         gravity = Gravity.CENTER
                     }
                 }.lparams(172, 172)
@@ -98,9 +98,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     imageView {
-                        imageResource = R.mipmap.ic_launcher
+                        imageResource = R.drawable.ic_right
                         scaleType = ImageView.ScaleType.CENTER_CROP
-                    }.lparams(58, 58) {
+                    }.lparams(72, 72) {
                         gravity = Gravity.CENTER
                         rightMargin = dip(15)
                     }
@@ -123,9 +123,9 @@ class MainActivity : AppCompatActivity() {
                         backgroundResource = R.drawable.shape_setting_item_top_left
 
                         imageView {
-                            imageResource = R.mipmap.ic_launcher
+                            imageResource = R.drawable.ic_pushpin
                             scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(58, 58) {
+                        }.lparams(90, 90) {
                             gravity = Gravity.CENTER
                         }
                     }.lparams(172, 172)
@@ -147,9 +147,9 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         imageView {
-                            imageResource = R.mipmap.ic_launcher
+                            imageResource = R.drawable.ic_info
                             scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(58, 58) {
+                        }.lparams(68, 68) {
                             gravity = Gravity.CENTER
                             leftMargin = 20
                         }
@@ -193,9 +193,9 @@ class MainActivity : AppCompatActivity() {
                         backgroundResource = R.drawable.shape_setting_item_bottom_left
 
                         imageView {
-                            imageResource = R.mipmap.ic_launcher
+                            imageResource = R.drawable.ic_no_touch
                             scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(58, 58) {
+                        }.lparams(90, 90) {
                             gravity = Gravity.CENTER
                         }
                     }.lparams(172, 172)
@@ -217,9 +217,9 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         imageView {
-                            imageResource = R.mipmap.ic_launcher
+                            imageResource = R.drawable.ic_info
                             scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(58, 58) {
+                        }.lparams(68, 68) {
                             gravity = Gravity.CENTER
                             leftMargin = 20
                         }
@@ -269,9 +269,9 @@ class MainActivity : AppCompatActivity() {
                     //                    backgroundResource = R.drawable.shape_setting_item_single_left
 
                     imageView {
-                        imageResource = R.mipmap.ic_launcher
+                        imageResource = R.drawable.ic_permission
                         scaleType = ImageView.ScaleType.CENTER_CROP
-                    }.lparams(58, 58) {
+                    }.lparams(90, 90) {
                         gravity = Gravity.CENTER
                     }
                 }.lparams(172, 172)
@@ -297,9 +297,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     imageView {
-                        imageResource = R.mipmap.ic_launcher
+                        imageResource = R.drawable.ic_right
                         scaleType = ImageView.ScaleType.CENTER_CROP
-                    }.lparams(58, 58) {
+                    }.lparams(72, 72) {
                         gravity = Gravity.CENTER
                         rightMargin = dip(15)
                     }
