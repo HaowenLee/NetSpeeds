@@ -12,6 +12,7 @@ import android.widget.TextView
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import me.haowen.netspeeds.global.App
 import me.haowen.netspeeds.global.PreKey
 import me.haowen.netspeeds.util.Preference
 import org.jetbrains.anko.textColor
