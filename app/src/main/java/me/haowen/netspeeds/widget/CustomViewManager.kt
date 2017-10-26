@@ -12,9 +12,9 @@ import android.widget.TextView
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import me.haowen.netspeeds.global.App
 import me.haowen.netspeeds.global.PreKey
 import me.haowen.netspeeds.util.Preference
+import me.haowen.netspeeds.util.ScreenUtil
 import org.jetbrains.anko.textColor
 import java.util.concurrent.TimeUnit
 
@@ -116,15 +116,19 @@ class CustomViewManager private constructor(private val mContext: Context) {
                     // TODO 横全屏到竖屏的时候获取不准确
                     hideView.getLocationOnScreen(top)
 
-                    if (!isVisible) {
-                        ankoView.visibility = View.GONE
-                    } else {
-                        if (top[1] == 0) {
+                    if (ScreenUtil.screenWidth < ScreenUtil.screenHeight) {
+                        if (!isVisible) {
                             ankoView.visibility = View.GONE
                         } else {
-                            ankoView.visibility = View.VISIBLE
-                            ankoView.text = (NetworkUtil.getNetSpeed())
+                            if (top[1] == 0) {
+                                ankoView.visibility = View.GONE
+                            } else {
+                                ankoView.visibility = View.VISIBLE
+                                ankoView.text = (NetworkUtil.getNetSpeed())
+                            }
                         }
+                    } else { // 横屏模式下不显示
+                        ankoView.visibility = View.GONE
                     }
                 }, { e -> e.printStackTrace() })
     }
