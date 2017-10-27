@@ -18,6 +18,7 @@ import me.haowen.netspeeds.global.PreKey
 import me.haowen.netspeeds.service.FloatService
 import me.haowen.netspeeds.util.Preference
 import me.haowen.netspeeds.widget.CustomViewManager
+import me.haowen.netspeeds.widget.settingItem
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -149,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                         imageView {
                             imageResource = R.drawable.ic_info
                             scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(68, 68) {
+                        }.lparams(dip(21), dip(21)) {
                             gravity = Gravity.CENTER
                             leftMargin = 20
                         }
@@ -179,7 +180,9 @@ class MainActivity : AppCompatActivity() {
                             rightMargin = dip(13)
                         }
                     }.lparams(matchParent, matchParent)
-                }.lparams(matchParent, wrapContent)
+                }.lparams(matchParent, wrapContent) {
+                    padding = dip(1)
+                }
 
                 view {
                     backgroundColor = Color.parseColor("#ebebeb")
@@ -219,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                         imageView {
                             imageResource = R.drawable.ic_info
                             scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(68, 68) {
+                        }.lparams(dip(21), dip(21)) {
                             gravity = Gravity.CENTER
                             leftMargin = 20
                         }
@@ -308,6 +311,8 @@ class MainActivity : AppCompatActivity() {
                 leftMargin = dip(15)
                 rightMargin = dip(15)
             }
+
+            settingItem()
         }
         if (commonROMPermissionCheck(this)) {
             startService(Intent(this, FloatService::class.java))
