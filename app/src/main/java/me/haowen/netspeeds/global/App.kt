@@ -15,7 +15,7 @@ class App : Application() {
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        var context: Context? = null
+        lateinit var context: Context
         lateinit var sharePre: SharedPreferences
     }
 

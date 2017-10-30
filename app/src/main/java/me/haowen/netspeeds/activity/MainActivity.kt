@@ -312,7 +312,9 @@ class MainActivity : AppCompatActivity() {
                 rightMargin = dip(15)
             }
 
-            settingItem()
+            settingItem {
+
+            }
         }
         if (commonROMPermissionCheck(this)) {
             startService(Intent(this, FloatService::class.java))
