@@ -1,20 +1,22 @@
 package me.haowen.netspeeds.widget
 
-import android.content.Context
 import android.graphics.Color
+import android.support.annotation.DrawableRes
 import android.view.Gravity
 import android.view.ViewManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import me.haowen.netspeeds.R
 import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
-open class SettingItemLayout(ctx: Context) : _LinearLayout(ctx)
-
-inline fun ViewManager.settingItem() = linearLayout {
+fun ViewManager.settingItem(@DrawableRes iconRes: Int,
+                            title: String,
+                            hintIconEnable: Boolean = false,
+                            itemClickListener: ((Unit) -> Unit)? = null) = linearLayout {
 
     orientation = LinearLayout.HORIZONTAL
-    backgroundResource = R.drawable.shape_setting_item_normal
+    backgroundResource = R.drawable.sl_setting_item_single
     gravity = Gravity.CENTER_VERTICAL
 
     lparams(matchParent, wrapContent) {
@@ -26,7 +28,7 @@ inline fun ViewManager.settingItem() = linearLayout {
         backgroundResource = R.drawable.shape_setting_item_single_left
 
         imageView {
-            imageResource = R.drawable.ic_save
+            imageResource = iconRes
             scaleType = ImageView.ScaleType.CENTER_CROP
         }.lparams(dip(30), dip(30)) {
             gravity = Gravity.CENTER
@@ -39,18 +41,20 @@ inline fun ViewManager.settingItem() = linearLayout {
         backgroundColor = Color.parseColor("#e8e8e8")
     }.lparams(2, matchParent)
 
-    textView("记忆位置") {
+    textView(title) {
         textSize = 18f
         textColor = Color.parseColor("#333333")
     }.lparams(wrapContent, wrapContent) {
         leftMargin = dip(15)
     }
 
-    imageView {
-        imageResource = R.drawable.ic_info
-        scaleType = ImageView.ScaleType.CENTER_CROP
-    }.lparams(dip(21), dip(21)) {
-        leftMargin = dip(8)
+    if (hintIconEnable) {
+        imageView {
+            imageResource = R.drawable.ic_info
+            scaleType = ImageView.ScaleType.CENTER_CROP
+        }.lparams(dip(21), dip(21)) {
+            leftMargin = dip(8)
+        }
     }
 
     space {}.lparams(0, matchParent) {
@@ -63,4 +67,6 @@ inline fun ViewManager.settingItem() = linearLayout {
     }.lparams(dip(24), dip(24f)) {
         rightMargin = dip(15)
     }
+
+    onClick { itemClickListener?.invoke(Unit) }
 }
