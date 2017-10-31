@@ -23,3 +23,5 @@ fun Any.getIColor(@ColorRes resId: Int): Int = getResources().getColor(resId)
 fun Any.getIDrawable(@DrawableRes drawableRes: Int): Drawable = getResources().getDrawable(drawableRes)
 
 fun Any.getIInteger(@IntegerRes integerRes: Int): Int = getResources().getInteger(integerRes)
+
+fun Any.getIIdentifier(name: String, defType: String): Int = getResources().getIdentifier(name, defType, App.context.packageName)

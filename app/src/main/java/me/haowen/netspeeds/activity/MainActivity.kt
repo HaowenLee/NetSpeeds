@@ -11,8 +11,6 @@ import android.provider.Settings
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
-import android.widget.ImageView
-import android.widget.LinearLayout
 import me.haowen.netspeeds.R
 import me.haowen.netspeeds.global.PreKey
 import me.haowen.netspeeds.service.FloatService
@@ -20,7 +18,6 @@ import me.haowen.netspeeds.util.Preference
 import me.haowen.netspeeds.widget.CustomViewManager
 import me.haowen.netspeeds.widget.settingItem
 import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             settingItem(
                     R.drawable.ic_save,
+                    R.drawable.ic_save_white,
                     "记忆位置",
                     itemClickListener = {
                         val top = IntArray(2)
@@ -70,156 +68,48 @@ class MainActivity : AppCompatActivity() {
 
                     space {}.lparams(matchParent, dip(16))
 
-                    verticalLayout {
-                        backgroundResource = R.drawable.shape_setting_item_normal
+                    settingItem(
+                            R.drawable.ic_pushpin,
+                            R.drawable.ic_pushpin_white,
+                            "固定",
+                            hintIconEnable = true,
+                            hintClickListener = {
 
-                        linearLayout {
-                            orientation = LinearLayout.HORIZONTAL
-                            gravity = Gravity.CENTER_VERTICAL
+                            },
+                            switchButtonEnable = true,
+                            switchStatus = isFixed,
+                            onClickedListener = { isChecked ->
+                                isFixed = isChecked
+                                CustomViewManager.getInstance(this@MainActivity)?.
+                                        ankoView?.isEnabled = !isChecked
+                            })
 
-                            frameLayout {
-                                backgroundResource = R.drawable.shape_setting_item_top_left
+                    settingItem(
+                            R.drawable.ic_no_touch,
+                            R.drawable.ic_no_touch_white,
+                            "可触摸",
+                            hintIconEnable = true,
+                            hintClickListener = {
 
-                                imageView {
-                                    imageResource = R.drawable.ic_pushpin
-                                    scaleType = ImageView.ScaleType.CENTER_CROP
-                                }.lparams(90, 90) {
-                                    gravity = Gravity.CENTER
-                                }
-                            }.lparams(172, 172)
-
-                            view {
-                                backgroundColor = Color.parseColor("#e8e8e8")
-                            }.lparams(2, matchParent)
-
-                            linearLayout {
-                                orientation = LinearLayout.HORIZONTAL
-                                gravity = Gravity.CENTER_VERTICAL
-                                backgroundResource = R.drawable.shape_setting_item_top_right
-
-                                textView("固定在屏幕的该位置") {
-                                    textSize = sp(4f).toFloat()
-                                    textColor = Color.parseColor("#8b8b8b")
-                                }.lparams(wrapContent, wrapContent) {
-                                    leftMargin = 42
-                                }
-
-                                imageView {
-                                    imageResource = R.drawable.ic_info
-                                    scaleType = ImageView.ScaleType.CENTER_CROP
-                                }.lparams(dip(21), dip(21)) {
-                                    gravity = Gravity.CENTER
-                                    leftMargin = 20
-                                }
-
-                                space {}.lparams(0, matchParent) {
-                                    weight = 1f
-                                }
-
-                                switch {
-                                    isChecked = isFixed
-                                    text = if (isChecked) {
-                                        "固定"
-                                    } else {
-                                        "不固定"
-                                    }
-                                    onCheckedChange { _, isChecked ->
-                                        isFixed = isChecked
-                                        CustomViewManager.getInstance(this@MainActivity)?.ankoView?.isEnabled =
-                                                !isChecked
-                                        text = if (isChecked) {
-                                            "固定"
-                                        } else {
-                                            "不固定"
-                                        }
-                                    }
-                                }.lparams(wrapContent, wrapContent) {
-                                    rightMargin = dip(13)
-                                }
-                            }.lparams(matchParent, matchParent)
-                        }.lparams(matchParent, wrapContent) {
-                            padding = dip(1)
-                        }
-
-                        view {
-                            backgroundColor = Color.parseColor("#ebebeb")
-                        }.lparams(matchParent, 2)
-
-                        linearLayout {
-                            orientation = LinearLayout.HORIZONTAL
-                            gravity = Gravity.CENTER_VERTICAL
-
-                            frameLayout {
-                                backgroundResource = R.drawable.shape_setting_item_bottom_left
-
-                                imageView {
-                                    imageResource = R.drawable.ic_no_touch
-                                    scaleType = ImageView.ScaleType.CENTER_CROP
-                                }.lparams(90, 90) {
-                                    gravity = Gravity.CENTER
-                                }
-                            }.lparams(172, 172)
-
-                            view {
-                                backgroundColor = Color.parseColor("#e8e8e8")
-                            }.lparams(2, matchParent)
-
-                            linearLayout {
-                                orientation = LinearLayout.HORIZONTAL
-                                gravity = Gravity.CENTER_VERTICAL
-                                backgroundResource = R.drawable.shape_setting_item_bottom_right
-
-                                textView("不再接收触摸事件") {
-                                    textSize = sp(4f).toFloat()
-                                    textColor = Color.parseColor("#8b8b8b")
-                                }.lparams(wrapContent, wrapContent) {
-                                    leftMargin = 42
-                                }
-
-                                imageView {
-                                    imageResource = R.drawable.ic_info
-                                    scaleType = ImageView.ScaleType.CENTER_CROP
-                                }.lparams(dip(21), dip(21)) {
-                                    gravity = Gravity.CENTER
-                                    leftMargin = 20
-                                }
-
-                                space {}.lparams(0, matchParent) {
-                                    weight = 1f
-                                }
-
-                                switch {
-                                    isChecked = isTouchable
-                                    text = if (isChecked) {
-                                        "可触摸"
-                                    } else {
-                                        "不可触摸"
-                                    }
-                                    onCheckedChange { _, isChecked ->
-                                        isTouchable = isChecked
-                                        CustomViewManager.getInstance(this@MainActivity)?.setEnableTouch(isChecked)
-                                        text = if (isChecked) {
-                                            "可触摸"
-                                        } else {
-                                            "不可触摸"
-                                        }
-                                    }
-                                }.lparams(wrapContent, wrapContent) {
-                                    rightMargin = dip(13)
-                                }
-                            }.lparams(matchParent, matchParent)
-                        }.lparams(matchParent, wrapContent)
-                    }.lparams(matchParent, wrapContent) {
-                        leftMargin = dip(15)
-                        rightMargin = dip(15)
-                    }
+                            },
+                            switchButtonEnable = true,
+                            switchStatus = isTouchable,
+                            onClickedListener = { isChecked ->
+                                isTouchable = isChecked
+                                CustomViewManager.getInstance(this@MainActivity)?.
+                                        setEnableTouch(isChecked)
+                            })
 
                     space { }.lparams(matchParent, dip(16))
 
                     settingItem(
                             R.drawable.ic_permission,
+                            R.drawable.ic_permission_white,
                             "通知监听权限",
                             hintIconEnable = true,
+                            hintClickListener = {
+
+                            },
                             itemClickListener = {
                                 startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
                             })
@@ -228,6 +118,7 @@ class MainActivity : AppCompatActivity() {
 
                     settingItem(
                             R.drawable.ic_permission,
+                            R.drawable.ic_permission_white,
                             "反馈",
                             hintIconEnable = true,
                             itemClickListener = {
