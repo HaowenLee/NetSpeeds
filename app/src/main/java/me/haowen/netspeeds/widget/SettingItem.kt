@@ -13,9 +13,17 @@ import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.sdk25.coroutines.onTouch
 
+object SettingStyle {
+    const val TOP = 1
+    const val MIDDLE = 2
+    const val BOTTOM = 3
+    const val SINGLE = 4
+}
+
 fun ViewManager.settingItem(@DrawableRes iconNormalRes: Int,
                             @DrawableRes iconPressedRes: Int,
                             title: String,
+                            settingStyle: Int = SettingStyle.SINGLE,
                             hintIconEnable: Boolean = false,
                             hintClickListener: ((Unit) -> Unit)? = null,
                             itemClickListener: ((Unit) -> Unit)? = null,
@@ -24,7 +32,12 @@ fun ViewManager.settingItem(@DrawableRes iconNormalRes: Int,
                             onClickedListener: ((isChecked: Boolean) -> Unit)? = null) = linearLayout {
 
     orientation = LinearLayout.HORIZONTAL
-    backgroundResource = R.drawable.shape_setting_item_normal
+    backgroundResource = when (settingStyle) {
+        SettingStyle.TOP -> R.drawable.shape_setting_item_top
+        SettingStyle.MIDDLE -> R.drawable.shape_setting_item_middle
+        SettingStyle.BOTTOM -> R.drawable.shape_setting_item_bottom
+        else -> R.drawable.shape_setting_item_normal
+    }
     gravity = Gravity.CENTER_VERTICAL
 
     lparams(matchParent, wrapContent) {
@@ -44,7 +57,23 @@ fun ViewManager.settingItem(@DrawableRes iconNormalRes: Int,
             gravity = Gravity.CENTER
         }
     }.lparams(dip(56), dip(56)) {
-        padding = dip(1)
+        leftPadding = dip(1)
+        rightPadding = dip(1)
+        when (settingStyle) {
+            SettingStyle.TOP -> {
+                topPadding = dip(1)
+            }
+            SettingStyle.MIDDLE -> {
+
+            }
+            SettingStyle.BOTTOM -> {
+                bottomPadding = dip(1)
+            }
+            else -> {
+                topPadding = dip(1)
+                bottomPadding = dip(1)
+            }
+        }
     }
 
     view {
@@ -97,7 +126,12 @@ fun ViewManager.settingItem(@DrawableRes iconNormalRes: Int,
 
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    backgroundResource = R.drawable.shape_setting_item_normal
+                    backgroundResource = when (settingStyle) {
+                        SettingStyle.TOP -> R.drawable.shape_setting_item_top
+                        SettingStyle.MIDDLE -> R.drawable.shape_setting_item_middle
+                        SettingStyle.BOTTOM -> R.drawable.shape_setting_item_bottom
+                        else -> R.drawable.shape_setting_item_normal
+                    }
                     frame.setBackgroundResource(R.drawable.shape_setting_item_single_left)
                     tvName.setTextColor(Color.parseColor("#333333"))
                     ivHint?.setImageResource(R.drawable.sl_hint)
@@ -105,7 +139,12 @@ fun ViewManager.settingItem(@DrawableRes iconNormalRes: Int,
                     ivIcon?.setImageResource(iconNormalRes)
                 }
                 MotionEvent.ACTION_DOWN -> {
-                    backgroundResource = R.drawable.shape_setting_item_single_pressed
+                    backgroundResource = when (settingStyle) {
+                        SettingStyle.TOP -> R.drawable.shape_setting_item_top_pressed
+                        SettingStyle.MIDDLE -> R.drawable.shape_setting_item_middle_pressed
+                        SettingStyle.BOTTOM -> R.drawable.shape_setting_item_bottom_pressed
+                        else -> R.drawable.shape_setting_item_single_pressed
+                    }
                     frame.setBackgroundResource(0)
                     tvName.setTextColor(Color.parseColor("#ffffff"))
                     ivHint?.setImageResource(R.drawable.ic_hint_white)
