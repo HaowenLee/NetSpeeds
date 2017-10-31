@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                                         getLocationOnScreen(top)
                                 screenX = top[0]
                                 screenY = top[1]
+                                toast("位置已存储")
                             })
 
                     space {}.lparams(matchParent, dip(16))
@@ -147,6 +148,8 @@ class MainActivity : AppCompatActivity() {
                             R.drawable.ic_permission_white,
                             "反馈",
                             itemClickListener = {
+                                startActivity(Intent(this@MainActivity,
+                                        FeedbackActivity::class.java))
                             })
                 }
             }
