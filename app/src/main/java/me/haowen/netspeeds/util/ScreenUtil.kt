@@ -9,7 +9,7 @@ object ScreenUtil {
 
     val screenWidth: Int
         get() {
-            val windowManager = App.context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val windowManager = App.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val dm = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(dm)
             return dm.widthPixels
@@ -17,7 +17,7 @@ object ScreenUtil {
 
     val screenHeight: Int
         get() {
-            val windowManager = App.context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val windowManager = App.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val dm = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(dm)
             return dm.heightPixels

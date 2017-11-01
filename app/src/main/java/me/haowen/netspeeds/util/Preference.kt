@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 
 class Preference<T>(private val name: String?, private val default: T) : ReadWriteProperty<Any?, T> {
 
-    private val sharePre: SharedPreferences = App.context!!.getSharedPreferences("config",
+    private val sharePre: SharedPreferences = App.context.getSharedPreferences("config",
             Context.MODE_PRIVATE)
 
     @Suppress("UNCHECKED_CAST")

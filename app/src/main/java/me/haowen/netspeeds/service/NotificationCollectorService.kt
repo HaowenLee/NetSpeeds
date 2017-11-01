@@ -20,7 +20,7 @@ class NotificationCollectorService : NotificationListenerService() {
     private val notificationsTime = ArrayList<Long>()
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
-        CustomViewManager.getInstance(App.context!!)?.isVisible = false
+        CustomViewManager.getInstance(App.context)?.isVisible = false
         notificationsTime.add(System.currentTimeMillis())
         Flowable.timer(HIDE_DURATION, TimeUnit.SECONDS)
                 .subscribe({
@@ -28,13 +28,13 @@ class NotificationCollectorService : NotificationListenerService() {
                             notificationsTime[notificationsTime.lastIndex] < HIDE_DURATION) {
                         return@subscribe
                     }
-                    CustomViewManager.getInstance(App.context!!)?.isVisible = true
+                    CustomViewManager.getInstance(App.context)?.isVisible = true
                 }, { t: Throwable ->
                     t.printStackTrace()
                 })
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
-        CustomViewManager.getInstance(App.context!!)?.isVisible = true
+        CustomViewManager.getInstance(App.context)?.isVisible = true
     }
 }

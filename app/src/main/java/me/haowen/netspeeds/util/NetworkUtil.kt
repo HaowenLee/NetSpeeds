@@ -12,7 +12,7 @@ object NetworkUtil {
 
     private val totalRxBytes: Long
         get() =
-            if (TrafficStats.getUidRxBytes(App.context?.applicationInfo?.uid ?: 0) == TrafficStats.UNSUPPORTED.toLong())
+            if (TrafficStats.getUidRxBytes(App.context.applicationInfo?.uid ?: 0) == TrafficStats.UNSUPPORTED.toLong())
                 0 else TrafficStats.getTotalRxBytes()
 
     init {

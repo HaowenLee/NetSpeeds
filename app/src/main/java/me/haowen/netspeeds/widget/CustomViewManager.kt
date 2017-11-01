@@ -42,7 +42,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
     private fun initView(): TextView = TextView(mContext).apply {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize)
         textColor = Color.WHITE
-        text = "0kB"
+        text = "0KB"
         gravity = Gravity.CENTER
         layoutParams = ViewGroup.LayoutParams(100, 100)
     }
