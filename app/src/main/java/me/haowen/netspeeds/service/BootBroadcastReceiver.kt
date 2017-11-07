@@ -12,6 +12,14 @@ class BootBroadcastReceiver : BroadcastReceiver() {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
-        context.startService(Intent(context, FloatService::class.java))
+        startKeepService(context)
+    }
+
+    /**
+     * 启动双服务
+     */
+    private fun startKeepService(context: Context) {
+        context.startService(Intent(context, LocalKeepService::class.java))
+        context.startService(Intent(context, RemoteKeepService::class.java))
     }
 }

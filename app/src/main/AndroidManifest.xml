@@ -25,8 +25,6 @@
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".service.FloatService" />
-
         <service
             android:name=".service.NotificationCollectorService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -41,6 +39,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".service.LocalKeepService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".service.RemoteKeepService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="me.haowen.remote" />
 
     </application>
 

@@ -13,7 +13,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import me.haowen.netspeeds.R
 import me.haowen.netspeeds.global.PreKey
-import me.haowen.netspeeds.service.FloatService
+import me.haowen.netspeeds.service.LocalKeepService
+import me.haowen.netspeeds.service.RemoteKeepService
 import me.haowen.netspeeds.util.Preference
 import me.haowen.netspeeds.widget.CustomViewManager
 import me.haowen.netspeeds.widget.SettingStyle
@@ -155,8 +156,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 启动本地服务和远程服务
         if (commonROMPermissionCheck(this)) {
-            startService(Intent(this, FloatService::class.java))
+            startKeepService()
         } else {
             if (isM()) requestAlertWindowPermission()
         }
@@ -198,8 +200,16 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
             if (Settings.canDrawOverlays(this)) {
-                startService(Intent(this, FloatService::class.java))
+                startKeepService()
             }
         }
+    }
+
+    /**
+     * 启动双服务
+     */
+    private fun startKeepService(){
+        startService(Intent(this, LocalKeepService::class.java))
+        startService(Intent(this, RemoteKeepService::class.java))
     }
 }

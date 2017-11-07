@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.TextView
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import me.haowen.netspeeds.global.PreKey
 import me.haowen.netspeeds.util.Preference
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit
 
 class CustomViewManager private constructor(private val mContext: Context) {
 
-    //窗口管理类
+    /** 窗口管理类 */
     private val mWindowManager: WindowManager = mContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
     val ankoView: TextView
@@ -33,6 +34,13 @@ class CustomViewManager private constructor(private val mContext: Context) {
 
     /** 文字大小 */
     private val mTextSize by lazy { barHeight / 9f * 5f }
+
+    private var flowable: Flowable<Long>? = Flowable.interval(0, 2, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureDrop()
+
+    private var disposable: Disposable? = null
 
     init {
         ankoView = initView()
@@ -47,21 +55,21 @@ class CustomViewManager private constructor(private val mContext: Context) {
         layoutParams = ViewGroup.LayoutParams(100, 100)
     }
 
-    private val parmas = WindowManager.LayoutParams()
+    private val lp = WindowManager.LayoutParams()
 
     fun setEnableTouch(enable: Boolean, update: Boolean = true) {
         if (enable) {
-            parmas.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            lp.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
         } else {
-            parmas.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            lp.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
         }
         if (update) {
-            mWindowManager.updateViewLayout(ankoView, parmas)
+            mWindowManager.updateViewLayout(ankoView, lp)
         }
     }
 
@@ -73,32 +81,33 @@ class CustomViewManager private constructor(private val mContext: Context) {
      * @author ldm
      * @time 2016/8/17 13:47
      */
+    @Synchronized
     fun showFloatViewOnWindow() {
         val screenX by Preference(PreKey.SCREEN_X, 0)
         val screenY by Preference(PreKey.SCREEN_Y, 0)
         val isTouchable by Preference(PreKey.IS_TOUCHABLE, true)
 
-        parmas.width = 200
-        parmas.height = barHeight
+        lp.width = 200
+        lp.height = barHeight
         //窗口图案放置位置
-        parmas.gravity = Gravity.TOP or Gravity.LEFT
+        lp.gravity = Gravity.TOP or Gravity.LEFT
         // 如果忽略gravity属性，那么它表示窗口的绝对X位置。
-        parmas.x = screenX
+        lp.x = screenX
         //如果忽略gravity属性，那么它表示窗口的绝对Y位置。
-        parmas.y = screenY
+        lp.y = screenY
 
         ////电话窗口。它用于电话交互（特别是呼入）。它置于所有应用程序之上，状态栏之下。
-        parmas.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
+        lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
         //FLAG_NOT_FOCUSABLE让window不能获得焦点，这样用户快就不能向该window发送按键事件及按钮事件
         //FLAG_NOT_TOUCH_MODAL即使在该window在可获得焦点情况下，仍然把该window之外的任何event发送到该window之后的其他window.
 
         setEnableTouch(isTouchable, false)
 
         // 期望的位图格式。默认为不透明。参考android.graphics.PixelFormat。
-        parmas.format = PixelFormat.RGBA_8888
+        lp.format = PixelFormat.RGBA_8888
 
         try {
-            mWindowManager.addView(ankoView, parmas)
+            mWindowManager.addView(ankoView, lp)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -107,30 +116,28 @@ class CustomViewManager private constructor(private val mContext: Context) {
 
         initListener()
 
-        Flowable.interval(0, 1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    val top = IntArray(2)
+        if (disposable == null || disposable?.isDisposed == true) {
+            disposable = flowable?.subscribe({
+                val top = IntArray(2)
+                // TODO 横全屏到竖屏的时候获取不准确
+                hideView.getLocationOnScreen(top)
 
-                    // TODO 横全屏到竖屏的时候获取不准确
-                    hideView.getLocationOnScreen(top)
-
-                    if (ScreenUtil.screenWidth < ScreenUtil.screenHeight) {
-                        if (!isVisible) {
+                if (ScreenUtil.screenWidth < ScreenUtil.screenHeight) {
+                    if (!isVisible) {
+                        ankoView.visibility = View.GONE
+                    } else {
+                        if (top[1] == 0) {
                             ankoView.visibility = View.GONE
                         } else {
-                            if (top[1] == 0) {
-                                ankoView.visibility = View.GONE
-                            } else {
-                                ankoView.visibility = View.VISIBLE
-                                ankoView.text = (NetworkUtil.getNetSpeed())
-                            }
+                            ankoView.visibility = View.VISIBLE
+                            ankoView.text = (NetworkUtil.getNetSpeed())
                         }
-                    } else { // 横屏模式下不显示
-                        ankoView.visibility = View.GONE
                     }
-                }, { e -> e.printStackTrace() })
+                } else { // 横屏模式下不显示
+                    ankoView.visibility = View.GONE
+                }
+            }, { e -> e.printStackTrace() })
+        }
     }
 
     private fun addHideView() {
@@ -181,11 +188,11 @@ class CustomViewManager private constructor(private val mContext: Context) {
                 MotionEvent.ACTION_MOVE -> {
                     val tempX = event.rawX.toInt()
                     val tempY = event.rawY.toInt()
-                    parmas.x += (tempX - mX)
-                    parmas.y += (tempY - mY)
+                    lp.x += (tempX - mX)
+                    lp.y += (tempY - mY)
                     mX = tempX
                     mY = tempY
-                    mWindowManager.updateViewLayout(v, parmas)
+                    mWindowManager.updateViewLayout(v, lp)
                 }
             }
 
@@ -195,16 +202,18 @@ class CustomViewManager private constructor(private val mContext: Context) {
 
     companion object {
 
-        //本类实例
+        /** 本类实例 */
         @SuppressLint("StaticFieldLeak")
+        @Volatile
         private var instance: CustomViewManager? = null
 
         /**
          * @param
          * @description 通过单例模式获取实例对象
-         * @author ldm
+         * @author lhw
          * @time 2016/8/17 11:59
          */
+        @Synchronized
         fun getInstance(mContext: Context): CustomViewManager? {
             if (null == instance) {
                 synchronized(CustomViewManager::class.java) {
