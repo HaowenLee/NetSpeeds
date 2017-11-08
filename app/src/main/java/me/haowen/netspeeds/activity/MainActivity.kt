@@ -1,6 +1,5 @@
 package me.haowen.netspeeds.activity
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -37,8 +36,8 @@ class MainActivity : AppCompatActivity() {
             backgroundColor = Color.parseColor("#ebebeb")
 
             relativeLayout {
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                elevation = dip(3).toFloat()
+//                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//                elevation = dip(3).toFloat()
 
                 backgroundColor = Color.parseColor("#f6f6f6")
 
