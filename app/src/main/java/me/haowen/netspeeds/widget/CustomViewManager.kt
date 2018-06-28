@@ -95,7 +95,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
         // 如果忽略gravity属性，那么它表示窗口的绝对X位置。
         lp.x = ScreenUtil.screenWidth / 4
         //如果忽略gravity属性，那么它表示窗口的绝对Y位置。
-        lp.y = barHeight
+        lp.y = 0
 
         ////电话窗口。它用于电话交互（特别是呼入）。它置于所有应用程序之上，状态栏之下。
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
