@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PixelFormat
+import android.os.Build
 import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
@@ -92,12 +93,16 @@ class CustomViewManager private constructor(private val mContext: Context) {
         //窗口图案放置位置
         lp.gravity = Gravity.TOP or Gravity.LEFT
         // 如果忽略gravity属性，那么它表示窗口的绝对X位置。
-        lp.x = screenX
+        lp.x = ScreenUtil.screenWidth / 4
         //如果忽略gravity属性，那么它表示窗口的绝对Y位置。
-        lp.y = screenY
+        lp.y = barHeight
 
         ////电话窗口。它用于电话交互（特别是呼入）。它置于所有应用程序之上，状态栏之下。
-        lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        } else {
+            lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
+        }
         //FLAG_NOT_FOCUSABLE让window不能获得焦点，这样用户快就不能向该window发送按键事件及按钮事件
         //FLAG_NOT_TOUCH_MODAL即使在该window在可获得焦点情况下，仍然把该window之外的任何event发送到该window之后的其他window.
 
@@ -151,7 +156,7 @@ class CustomViewManager private constructor(private val mContext: Context) {
         //如果忽略gravity属性，那么它表示窗口的绝对Y位置。
         hideParams.y = 0
         ////电话窗口。它用于电话交互（特别是呼入）。它置于所有应用程序之上，状态栏之下。
-        hideParams.type = WindowManager.LayoutParams.TYPE_PHONE
+        hideParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         //FLAG_NOT_FOCUSABLE让window不能获得焦点，这样用户快就不能向该window发送按键事件及按钮事件
         //FLAG_NOT_TOUCH_MODAL即使在该window在可获得焦点情况下，仍然把该window之外的任何event发送到该window之后的其他window.
         hideParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
