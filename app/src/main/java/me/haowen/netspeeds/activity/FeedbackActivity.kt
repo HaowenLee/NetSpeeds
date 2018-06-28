@@ -34,8 +34,10 @@ class FeedbackActivity : AppCompatActivity() {
             backgroundColor = Color.parseColor("#ebebeb")
 
             relativeLayout {
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                elevation = dip(3).toFloat()
+
+                if (isL()) {
+                    elevation = dip(3).toFloat()
+                }
 
                 backgroundColor = Color.parseColor("#f6f6f6")
 
@@ -55,7 +57,7 @@ class FeedbackActivity : AppCompatActivity() {
                     centerInParent()
                 }
 
-            }.lparams(matchParent, 156)
+            }.lparams(matchParent, dip(48))
 
             scrollView {
 
@@ -82,6 +84,9 @@ class FeedbackActivity : AppCompatActivity() {
                     if (index in 0..content.length) tvContent?.text = content.substring(0, index.toInt())
                 }, {})
     }
+
+    /** SDK版本是否是5.0 */
+    private fun isL() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
     override fun onDestroy() {
         super.onDestroy()

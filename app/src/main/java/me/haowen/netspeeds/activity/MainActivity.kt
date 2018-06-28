@@ -1,5 +1,6 @@
 package me.haowen.netspeeds.activity
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -36,8 +37,10 @@ class MainActivity : AppCompatActivity() {
             backgroundColor = Color.parseColor("#ebebeb")
 
             relativeLayout {
-//                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//                elevation = dip(3).toFloat()
+
+                if(isL()) {
+                    elevation = dip(3).toFloat()
+                }
 
                 backgroundColor = Color.parseColor("#f6f6f6")
 
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     gravity = Gravity.CENTER
                 }
 
-            }.lparams(matchParent, 156)
+            }.lparams(matchParent, dip(48))
 
             scrollView {
 
@@ -178,13 +181,15 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
         return result
     }
 
     /** SDK版本是否是6.0 */
     private fun isM() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+    /** SDK版本是否是5.0 */
+    private fun isL() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
     /** 申请权限 */
     @RequiresApi(Build.VERSION_CODES.M)
